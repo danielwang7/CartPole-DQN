@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from torch.optim.lr_scheduler import LambdaLR
 import os
 
 class DQN(nn.Module):
@@ -41,6 +42,8 @@ class QTrainer:
 
         # NOTE: SHOULD BE FOR POLICY NET, NOT TARGET
         self.optimizer = torch.optim.Adam(policy_net.parameters(), lr=self.lr)
+
+        self.lr_scheduler = LambdaLR(self.optimizer, lr_lambda=lambda episode: 0.99 ** episode)
         
         
     def train_step(self, states, actions, rewards, next_states, dones):

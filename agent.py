@@ -2,20 +2,25 @@ import torch
 import random
 from collections import deque
 from model import DQN, QTrainer
+import torch.nn.functional as F
 
 LEARNING_RATE = 0.001
-MEMORY_SIZE = 10000  # Experience replay memory size
-BATCH_SIZE = 64  # Mini-batch size for training
+MEMORY_SIZE = 50000 
+BATCH_SIZE = 64
+EPSILON_DECAY = 0.997
+MIN_EPSILON = 0.01
+GAMMA = 0.99
 
 class Agent:
 
     def __init__(self, state_dim, action_dim):
         # self.n_games = 0 
+        # TODO: DETERMINE IF THE EPSILON EVEN HAS TO BE IN THE AGENT?
         self.epsilon = 1
-        self.min_epsilon = 0.001
-        self.epsilon_decay = 0.995
+        self.min_epsilon = MIN_EPSILON
+        self.epsilon_decay = EPSILON_DECAY
 
-        self.gamma = 0.9
+        self.gamma = GAMMA
         self.memory = deque(maxlen=MEMORY_SIZE)
 
         # INITIALIZE THE ***MODELS***
@@ -30,7 +35,12 @@ class Agent:
         """
         
         with torch.no_grad():
-            action = torch.argmax(self.policy_net(state)).item()
+            # action = torch.argmax(self.policy_net(state)).item()
+
+            # TODO: UNDERSTAND THIS AND SEE IF ITS CORRECT
+            q_values = self.policy_net(state)
+            action_probs = F.softmax(q_values, dim=-1)  # Convert Q-values to probabilities
+            action = torch.multinomial(action_probs, 1).item()  # Sample based on probability
 
         return action
     
