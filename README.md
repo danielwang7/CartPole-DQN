@@ -30,30 +30,6 @@ All code—model definitions, training loop, evaluation scripts, and visualizati
 4) Periodic recordings of model performance throughout training
 
 
-## File Structure
-- `agent.py`: Contains the `Agent` class, which manages the policy and target networks, handles action selection, experience replay, and coordinates the training process.
-- `export.py`: Utility functions for saving and exporting trained models and results.
-- `model.py`: Defines the neural network architecture (`DQN` class) and the `QTrainer` class for computing Q-values and performing optimization steps.
-- `plot.py`: Functions for generating and saving training and evaluation plots, such as reward curves and epsilon decay.
-- `test.py`: Script for evaluating the trained agent's performance and visualizing results.
-- `train.py`: Main script for training the model, including environment setup, agent initialization, and training loop.
-- `plots/`: Folder to store generated plots from training and testing sessions.
-- `recordings/`: Folder for storing periodic recordings and visualizations of model performance.
-
-
-## Results
-
-#### Sample Learning Performance
-![training-recording-250](Assets/training-episode-250.gif)
-
-![training-recording-250](Assets/training-episode-750.gif)
-
-![training-recording-250](Assets/testing-episode-0.gif)
-
-#### Model Progress Over Trials
-
-
-
 ## Installation
 
 1. Clone the repository:
@@ -69,14 +45,54 @@ All code—model definitions, training loop, evaluation scripts, and visualizati
     pip install -r requirements.txt
     ```
 4. Train the model via running Train, *e.g.*:
-
-```bash
-python train.py
-```
+    ```bash
+    python train.py
+    ```
 5. Visualize the trained model via the test file
-```bash
-python test.py
-```
+    ```bash
+    python test.py
+    ```
+
+
+## Results
+
+#### Sample Learning Performance
+<p align="center">
+    <img src="Assets/train_scores.png" alt="Training Scores" width="480"/>
+    <br>
+    <em>Figure: Episode reward curve during training.</em>
+</p>
+
+<p align="center">
+    <img src="Assets/test_scores.png" alt="Testing Scores" width="480"/>
+    <br>
+    <em>Figure: Episode reward for testing, which is sampled at fixed intervals during training</em>
+</p>
+
+#### Model Progress Over Trials
+
+***Performance at training episode 250:***
+![training-recording-250](Assets/training-episode-250.gif)
+***Performance at training episode 750:***
+![training-recording-250](Assets/training-episode-750.gif)
+***Performance at Testing (Runs indefinitely):***
+![training-recording-250](Assets/testing-episode-0.gif)
+
+
+
+
+## File Structure
+- `agent.py`: Contains the `Agent` class, which manages the policy and target networks, handles action selection, experience replay, and coordinates the training process.
+- `export.py`: Utility functions for saving and exporting trained models and results.
+- `model.py`: Defines the neural network architecture (`DQN` class) and the `QTrainer` class for computing Q-values and performing optimization steps.
+- `plot.py`: Functions for generating and saving training and evaluation plots, such as reward curves and epsilon decay.
+- `test.py`: Script for evaluating the trained agent's performance and visualizing results.
+- `train.py`: Main script for training the model, including environment setup, agent initialization, and training loop.
+- `plots/`: Folder to store generated plots from training and testing sessions.
+- `recordings/`: Folder for storing periodic recordings and visualizations of model performance.
+
+
+
 
 # Theory and Mathematics
 ______
@@ -170,7 +186,7 @@ In code we convert Q-values via softmax, but you can equivalently do ε-greedy o
 **Hyperparameters:**
 Replay buffer size: 70 000
 Batch size: 128
-Discount factor \gamma: 0.99
+Discount factor $\gamma$: 0.99
 Initial LR: 0.001, decayed by 0.99^episode
 $\varepsilon$-decay: 0.997 per episode, min 0.01
 Target‐network update frequency: configurable (e.g. every 5 episodes)
