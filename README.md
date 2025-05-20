@@ -72,12 +72,15 @@ All code—model definitions, training loop, evaluation scripts, and visualizati
 #### Model Progress Over Trials
 
 ***Performance at training episode 250:***
+
 ![training-recording-250](Assets/training-episode-250.gif)
 
 ***Performance at training episode 750:***
+
 ![training-recording-250](Assets/training-episode-750.gif)
 
 ***Performance at Testing (Runs indefinitely):***
+
 ![training-recording-250](Assets/testing-episode-0.gif)
 
 
